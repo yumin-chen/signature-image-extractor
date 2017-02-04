@@ -1,13 +1,16 @@
-%%%%%%
-%
+%-------------------------------------------------------------------------
+% ========================
 % Thresholding
+% ========================
 %
-% (C) Yumin Chen
+% Copyright (C): Yumin Chen
 %
 % 02/Feb/2017
 %
 % Introduction
-% This is a thresholding program
+% ------------------------
+% This program aims to threshold an image.
+% -------------------------------------------------------------------------
 
 
 clc; % Clear command line
@@ -23,7 +26,7 @@ Gmin = max(min(Gray(:)), Gmean - Gstd*3);
 Gmax = min(max(Gray(:)), Gmean + Gstd*3);
 
 Output = (Image - Gmin) / (Gmax - Gmin);
-threshold = mean(Output(:))
+threshold = mean(Output(:));
 BlackWhite = double(Gray > threshold);
 Seg = Gray .* BlackWhite;
 

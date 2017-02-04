@@ -1,13 +1,16 @@
-%%%%%%
-%
+%-------------------------------------------------------------------------
+% ========================
 % Contrast Stretching
+% ========================
 %
-% (C) Yumin Chen
+% Copyright (C): Yumin Chen
 %
 % 02/Feb/2017
 %
 % Introduction
-% This is a contrast streching program
+% ------------------------
+% This program aims to stretch the contrast of an image.
+% -------------------------------------------------------------------------
 
 
 clc; % Clear command line
@@ -17,10 +20,10 @@ close all; % Close all sub-windows
 Image = im2double(imread('Boss.bmp'));
 Gray = rgb2gray(Image); 
 
-Gmean = mean(Gray(:))
-Gstd = std(Gray(:))
-Gmin = max(min(Gray(:)), Gmean - Gstd*3)
-Gmax = min(max(Gray(:)), Gmean + Gstd*3)
+Gmean = mean(Gray(:));
+Gstd = std(Gray(:));
+Gmin = max(min(Gray(:)), Gmean - Gstd*3);
+Gmax = min(max(Gray(:)), Gmean + Gstd*3);
 
 Output = (Gray - Gmin) / (Gmax - Gmin);
 
