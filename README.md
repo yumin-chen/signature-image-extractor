@@ -11,7 +11,7 @@ In a sneaky move, you have slipped in to The Boss's office and snapped a piccie 
 
 - Adaptive thresholding and segmentation masking would work well here;
 
-- Challenge : Find, isolate and clean the signature of the idiot pictured in [Signature.pdf](Signature.pdf);
+- Challenge : Find, isolate and clean the signature of the idiot pictured in [Trump.jpg](Trump.jpg);
 
 - Refer to the general guidelines to maximise your marks;
 
