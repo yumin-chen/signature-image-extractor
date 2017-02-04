@@ -17,8 +17,10 @@ close all; % Close all sub-windows
 Image = im2double(imread('Boss.bmp'));
 Gray = rgb2gray(Image); 
 
-Gmin = min(Gray(:));
-Gmax = max(Gray(:));
+Gmean = mean(Gray(:))
+Gstd = std(Gray(:))
+Gmin = max(min(Gray(:)), Gmean - Gstd*3)
+Gmax = min(max(Gray(:)), Gmean + Gstd*3)
 
 Output = (Gray - Gmin) / (Gmax - Gmin);
 
