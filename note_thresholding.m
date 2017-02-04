@@ -1,13 +1,13 @@
 %%%%%%
 %
-% Contrast Stretching
+% Thresholding
 %
 % (C) Yumin Chen
 %
 % 02/Feb/2017
 %
 % Introduction
-% This is a contrast streching algorithm
+% This is a thresholding program
 
 
 clc; % Clear command line
@@ -17,11 +17,13 @@ close all; % Close all sub-windows
 Image = im2double(imread('Boss.bmp'));
 Gray = rgb2gray(Image); 
 
-Gmin = min(Gray(:));
-Gmax = max(Gray(:));
+Gmean = mean(Gray(:));
+Gstd = std(Gray(:));
+Gmin = max(min(Gray(:)), Gmean - Gstd*3);
+Gmax = min(max(Gray(:)), Gmean + Gstd*3);
 
 Output = (Image - Gmin) / (Gmax - Gmin);
-threshold = mean(Output(:)) - std(Output(:))
+threshold = mean(Output(:))
 BlackWhite = double(Gray > threshold);
 Seg = Gray .* BlackWhite;
 
