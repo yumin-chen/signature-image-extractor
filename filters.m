@@ -25,19 +25,21 @@ gauss = [1 4 1;
          4 7 4;
          1 4 1]/27;
 
-output = gray;
+output = image;
 
 for x = 2:width - 1
     for y = 2: height - 1
-        area = gray(y-1:y+1, x-1:x+1);
-        filteredArea = area .* gauss;
-        output(y-1:y+1, x-1:x+1) = sum(filteredArea(:));
+        for i = 1:3
+            area = image(y-1:y+1, x-1:x+1, i);
+            filteredArea = area .* gauss;
+            output(y-1:y+1, x-1:x+1, i) = sum(filteredArea(:));
+        end
     end
 end
 
 
 figure;
-subplot(1,2,1), imshow(gray), title('Gray');
+subplot(1,2,1), imshow(image), title('Original');
 subplot(1,2,2), imshow(output), title('Filtered');
 
 
