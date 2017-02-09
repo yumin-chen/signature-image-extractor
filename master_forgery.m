@@ -33,23 +33,29 @@ contrastStretched = (gray - gLowerBound) / (gUpperbound - gLowerBound);
 threshold = mean(contrastStretched(:));
 blackWhite = double(contrastStretched > threshold);
 seg = gray .* blackWhite;
+colored = image;
 
 [height, width, depth] = size(image);
 half = 3;
 for x = half + 1:width - half
     for y = half + 1: height - half
         area = contrastStretched(y-half:y+half, x-half:x+half);
-        threshold = mean(area(:));
+        threshold = mean(area(:)) - 0.05;
         seg(y, x) = double(contrastStretched(y, x) > threshold);
+        if contrastStretched(y, x) > threshold
+            colored(y, x, :) = 1;
+        end            
     end
 end
 
 
-
 figure;
-subplot(1,3,1), imshow(contrastStretched), title('Contrast Stretched');
-subplot(1,3,2), imshow(blackWhite), title('Global Thresholding');
-subplot(1,3,3), imshow(seg), title('Adaptive Thresholding');
+imshow(contrastStretched), title('Contrast Stretched');
+%subplot(1,3,2), imshow(blackWhite), title('Global Thresholding');
+figure;
+imshow(seg), title('Adaptive Thresholding');
+figure;
+imshow(colored), title('Colored');
 
 
 
