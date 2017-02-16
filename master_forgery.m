@@ -37,6 +37,26 @@ contrastStretched = (image - gLowerBound) / (gUpperbound - gLowerBound);
 
 
 % ------------------------
+% Filter
+% ------------------------
+gauss = [1 4 1;
+         4 7 4;
+         1 4 1]/27; % The Gaussian filter weighted sum matrix
+
+filteredImage = contrastStretched;
+for x = 2:width - 1
+    for y = 2: height - 1
+        for i = 1:3
+            area = contrastStretched(y-1:y+1, x-1:x+1, i);
+            filteredArea = area .* gauss;
+            filteredImage(y, x, i) = sum(filteredArea(:));
+        end
+    end
+end
+% Show adaptive thresholding reconstructed image
+figure, imshow(filteredImage), title('Adaptive Thresholding');
+
+% ------------------------
 % Adaptive thresholding
 % ------------------------
 adaptiveThresholding = image;
@@ -44,9 +64,9 @@ half = 3;
 % Loop through the image to apply threshold to each pixel
 for x = half + 1:width - half
     for y = half + 1: height - half
-        area = contrastStretched(y-half:y+half, x-half:x+half, :);
-        threshold = mean(area(:)) - 0.05;
-        if mean(contrastStretched(y, x, :)) > threshold
+        area = filteredImage(y-half:y+half, x-half:x+half, :);
+        threshold = mean(area(:)) - 7/256;
+        if mean(filteredImage(y, x, :)) > threshold
             % Wipe out the pixel if larger than threshold
             adaptiveThresholding(y, x, :) = 1;
         end            
