@@ -56,16 +56,25 @@ end
 % Show adaptive thresholding reconstructed image
 figure, imshow(filteredImage), title('Adaptive Thresholding');
 
+
 % ------------------------
-% Adaptive thresholding
+% Thresholding
 % ------------------------
+globalThreshold = mean(contrastStretched(:));
 adaptiveThresholding = image;
 half = 3;
 % Loop through the image to apply threshold to each pixel
 for x = half + 1:width - half
     for y = half + 1: height - half
         area = filteredImage(y-half:y+half, x-half:x+half, :);
-        threshold = mean(area(:)) - 7/256;
+        areaMean = mean(area(:));
+        % Global thresholding
+        if areaMean > globalThreshold
+            adaptiveThresholding(y-half:y+half, x-half:x+half, :) = 1;
+            continue;
+        end
+        % Adaptive thresholding
+        threshold = areaMean - 7/256;
         if mean(filteredImage(y, x, :)) > threshold
             % Wipe out the pixel if larger than threshold
             adaptiveThresholding(y, x, :) = 1;
@@ -82,12 +91,14 @@ figure, imshow(adaptiveThresholding), title('Adaptive Thresholding');
 % Convert to gray and reverse to a black and white binary image
 binaryImage = rgb2gray(adaptiveThresholding(half + 1: height - half, ...
     half + 1:width - half, :)) ~= 1;
-% Find the non-zero areas
+% Find the non-zero positions
 [rows, columns] = find(binaryImage);
+% Analyze data using statistics
 top = min(rows);
 bottom = max(rows);
 left = min(columns);
 right = max(columns);
+% Using statistics three-sigma rule to get 99.73% of data
 croppedImage = adaptiveThresholding(top:bottom, left:right, :);
 % Show cropped image
 figure, imshow(croppedImage), title('Cropped image');
