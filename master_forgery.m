@@ -93,10 +93,10 @@ binaryImage = rgb2gray(adaptiveThresholding(half + 1: height - half, ...
 % Find the non-zero positions
 [rows, columns] = find(binaryImage);
 % Analyze data using statistics
-top = min(rows);
-bottom = max(rows);
-left = min(columns);
-right = max(columns);
+top = min(rows) + half + 1;
+bottom = max(rows) + half + 1;
+left = min(columns) + half + 1;
+right = max(columns) + half + 1;
 % Using statistics three-sigma rule to get 99.73% of data
 croppedImage = adaptiveThresholding(top:bottom, left:right, :);
 % Show cropped image
