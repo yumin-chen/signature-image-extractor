@@ -47,7 +47,9 @@ filteredImage = contrastStretched;
 for x = 2:width - 1
     for y = 2: height - 1
         for i = 1:3
+            % Dot multiply the "cookie" area by the filter matrix
             filteredArea = contrastStretched(y-1:y+1, x-1:x+1, i) .* gauss;
+            % Apply the sum to current position
             filteredImage(y, x, i) = sum(filteredArea(:));
         end
     end
