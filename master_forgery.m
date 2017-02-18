@@ -113,11 +113,12 @@ rowsStd = std(rows);
 rowsMedian = median(rows);
 colsStd = std(columns);
 colsMedian = median(columns);
-sTop = rowsMedian - rowsStd * 3;
-sBottom = rowsMedian + rowsStd * 3;
-sLeft = colsMedian - colsStd * 3;
-sRight = colsMedian + colsStd * 3;
 % Using statistics three-sigma rule to get 99.73% of data
+sTop = max(rowsMedian - rowsStd * 3, 1);
+sBottom = min(rowsMedian + rowsStd * 3, height);
+sLeft = max(colsMedian - colsStd * 3, 1);
+sRight = min(colsMedian + colsStd * 3, width);
+% Return the final result
 output = adaptiveThresholding(sTop:sBottom, sLeft:sRight, :);
 end
 
