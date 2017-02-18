@@ -45,7 +45,7 @@ image = im2double(imread(fileName));
 grayImage = rgb2gray(image); 
 
 % Stretch contrast
-contrastStretched = stretchContrast(image, grayImage, 6);
+contrastStretched = stretchContrast(image);
 
 % Apply the Gaussian filter
 gauss = [1 4 1;
@@ -54,13 +54,13 @@ gauss = [1 4 1;
 filteredImage = filter(contrastStretched, gauss);
 
 % Thresholding
-thresholdedImage = thresholding(contrastStretched, grayImage, filteredImage);
+thresholdedImage = thresholding(filteredImage, grayImage);
 
 % Cropping
 croppedImage = cropping(thresholdedImage);
 
-% Stretch contrast again to get a fuller color
-output = stretchContrast(croppedImage, rgb2gray(croppedImage), 4);
+% Stretch contrast again to pop out the colors more
+output = stretchContrast(croppedImage);
 
 end
 
@@ -68,16 +68,11 @@ end
 % ------------------------
 % Stretch contrast
 % ------------------------
-function output = stretchContrast(image, grayImage, sigma)
-% Stretch the contrast of an image to a width six standard deviations using
-% the statistics three-sigma rule.
-gMin = min(grayImage(:));
-gMax = max(grayImage(:));
-gStd = std(grayImage(:));
-% Apply statistics three-sigma rule to bound to the majority of the data
-gLowerBound = max(gMin, (gMax + gMin) / 2 - gStd * sigma / 2);
-gUpperbound = min(gMax, (gMax + gMin) / 2 + gStd * sigma / 2);
-output = (image - gLowerBound) / (gUpperbound - gLowerBound);
+function output = stretchContrast(image)
+% Stretch the contrast of an image
+gMin = min(image(image > 0));
+gMax = max(image(image < 1));
+output = (image - gMin) / (gMax - gMin);
 end
 
 
@@ -102,7 +97,7 @@ end
 % ------------------------
 % Thresholding
 % ------------------------
-function output = thresholding(image, grayImage, adaptiveSource)
+function output = thresholding(image, grayImage)
 [height, width, ~] = size(image);
 globalThreshold = mean(image(:)) + std(image(:));
 binaryImage = grayImage < globalThreshold;
@@ -118,10 +113,10 @@ for x = half + 1:width - half
             output(y, x, :) = 1;
             continue
         end
-        area = adaptiveSource(y-half:y+half, x-half:x+half, :);
+        area = image(y-half:y+half, x-half:x+half, :);
         % Adaptive thresholding
         threshold = mean(area(:)) - 7/256;
-        if mean(adaptiveSource(y, x, :)) > threshold
+        if mean(image(y, x, :)) > threshold
             % White out the pixel if larger than threshold
             output(y, x, :) = 1;
         end
