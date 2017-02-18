@@ -13,13 +13,23 @@
 % program is to clean and extract a signature from a natural image.
 % -------------------------------------------------------------------------
 
-% Clear and clean enviroment
-clc;        % Clear command line
-clear all;  % Clear all variables
-close all;  % Close all sub-windows
+function master_forgery
+% This is a hack that allows function definition in a script, this is used
+% so the code could be used for different images -- Boss.bmp and Trump.jpg
+
+    % Clear and clean enviroment
+    clc;        % Clear command line
+    clear all;  % Clear all variables
+    close all;  % Close all sub-windows
+    processImage('Boss.bmp');
+    processImage('Trump.jpg');
+end
+
+function processImage(fileName)
+% Process the natural image and extract the signature and return it
 
 % Read image
-image = im2double(imread('Boss.bmp'));
+image = im2double(imread(fileName));
 gray = rgb2gray(image); 
 [height, width, depth] = size(image);
 
@@ -103,5 +113,7 @@ right = max(columns) + half + 1;
 croppedImage = adaptiveThresholding(top:bottom, left:right, :);
 % Show cropped image
 figure, imshow(croppedImage), title('Cropped image');
+end
+
 
 
