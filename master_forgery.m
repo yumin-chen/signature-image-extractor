@@ -21,11 +21,17 @@ function master_forgery
     clc;        % Clear command line
     clear all;  % Clear all variables
     close all;  % Close all sub-windows
-    processImage('Boss.bmp');
-    processImage('Trump.jpg');
+    
+    % Process the Boss.bmp image
+    bossResult = processImage('Boss.bmp');
+    figure, imshow(bossResult), title('Boss.bmp');
+    
+    % Process the Trump.jpg image
+    TrumpResult = processImage('Trump.jpg');
+    figure, imshow(TrumpResult), title('Trump.jpg');
 end
 
-function processImage(fileName)
+function output = processImage(fileName)
 % Process the natural image and extract the signature and return it
 
 % Read image
@@ -92,8 +98,6 @@ for x = half + 1:width - half
         end            
     end
 end
-% Show adaptive thresholding reconstructed image
-figure, imshow(adaptiveThresholding), title('Adaptive Thresholding');
 
 
 % ------------------------
@@ -105,14 +109,16 @@ binaryImage = rgb2gray(adaptiveThresholding(half + 1: height - half, ...
 % Find the non-zero positions
 [rows, columns] = find(binaryImage);
 % Analyze data using statistics
-top = min(rows) + half + 1;
-bottom = max(rows) + half + 1;
-left = min(columns) + half + 1;
-right = max(columns) + half + 1;
+rowsStd = std(rows);
+rowsMedian = median(rows);
+colsStd = std(columns);
+colsMedian = median(columns);
+sTop = rowsMedian - rowsStd * 3;
+sBottom = rowsMedian + rowsStd * 3;
+sLeft = colsMedian - colsStd * 3;
+sRight = colsMedian + colsStd * 3;
 % Using statistics three-sigma rule to get 99.73% of data
-croppedImage = adaptiveThresholding(top:bottom, left:right, :);
-% Show cropped image
-figure, imshow(croppedImage), title('Cropped image');
+output = adaptiveThresholding(sTop:sBottom, sLeft:sRight, :);
 end
 
 
