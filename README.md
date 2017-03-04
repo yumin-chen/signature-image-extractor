@@ -1,6 +1,17 @@
-**Image Processing Assignment -- Master Forgery**
+**Signature Image Extractor**
 ========================
-This is an assignment from Image Processing module.
+
+
+Introduction
+------------------------
+This is originally an assignment from Image Processing module -- Master Forgery. This project aims to locate and extract the signature from any natural image and clean and crop to only the signature itself.
+
+
+Results
+------------------------
+| Original | Processed |
+| :---: |:---:|
+| ![Original](Boss.bmp) | ![Processed](result_boss.jpg) |
 
 
 Introduction
