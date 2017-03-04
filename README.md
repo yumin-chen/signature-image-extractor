@@ -14,7 +14,7 @@ Results
 | ![Original](Boss.bmp) | ![Processed](result_boss.jpg) |
 
 
-Introduction
+Scenario
 ------------------------
 In a sneaky move, you have slipped in to The Boss's office and snapped a piccie of his signature ([Boss.bmp](Boss.bmp)). Full of nefarious plans to empty the company accounts, you slap it into an official document only to find very disappointing, unconvincing results ([Signature.pdf](Signature.pdf)). Use your newly acquired Image Processing prowess to clean Boss.bmp to give a more convincing and usable signature for your forged documents. 
 
