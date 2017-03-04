@@ -25,15 +25,16 @@ Please see the file named [LICENSE.md](LICENSE.md).
 
 Author
 ------------------------
-* Charlie Chen  
-	founder of [CharmySoft][1]
+* Chen Yumin  
 
 
 Contact
 ------------------------
-* CharmySoft: [*http://www.CharmySoft.com/*][1]  
-* About: [*http://www.CharmySoft.com/about.htm*][2]  
-* Email: [*Charlie@CharmySoft.com*](mailto:Charlie@CharmySoft.com)  
+* Chen Yumin: [*http://chenyumin.com/*][1]
+* CharmySoft: [*http://CharmySoft.com/*][2]  
+* About: [*http://CharmySoft.com/about*][3]  
+* Email: [*hello@chenyumin.com*](mailto:hello@chenyumin.com)  
 
-[1]: http://www.CharmySoft.com/ "CharmySoft"
-[2]: http://www.CharmySoft.com/about.htm "About CharmySoft"
+[1]: http://chenyumin.com/ "Chen Yumin"
+[2]: http://www.CharmySoft.com/ "CharmySoft"
+[3]: http://www.CharmySoft.com/about "About CharmySoft"
